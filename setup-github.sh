@@ -47,18 +47,12 @@ else
 fi
 
 SLUG="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
-echo
-read -r -p "Switch on GitHub Pages so the share links work? [y/N] " ans
-if [[ "${ans:-n}" =~ ^[Yy]$ ]]; then
-  if gh api -X POST "repos/$SLUG/pages" \
-      -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1; then
-    echo "Pages is building. In a minute or two: https://$(cut -d/ -f1 <<<"$SLUG").github.io/$(cut -d/ -f2 <<<"$SLUG")/"
-  else
-    echo "Could not switch it on from here (private repos need a paid plan for Pages)."
-    echo "Do it in the browser: Settings -> Pages -> deploy from branch -> main -> / (root)"
-  fi
-fi
 
 echo
 echo "Done. Repo: https://github.com/$SLUG"
+echo
+echo "To put it online, connect the repo to Netlify: netlify.com -> Add new site ->"
+echo "Import an existing project. There is no build command and the publish"
+echo "directory is the repo root; every push to main then deploys itself."
+echo
 echo "For hands-off commits, run:  ./autopush.sh"

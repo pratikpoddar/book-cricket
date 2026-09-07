@@ -4,6 +4,8 @@ The last-bench game from an Indian school in the late 90s: flip to a random page
 notebook, and the last digit of the page number decides the ball. You bat 20 balls against a
 bench rival, set a target, then watch him chase it.
 
+Play it: **https://bookcricketindia.netlify.app/**
+
 One file, no build step, no dependencies. Open `index.html` in a browser and it runs.
 
 ## House rules
@@ -30,18 +32,19 @@ beating a score — the result is identical for everyone who opens it.
 
 ## Publishing
 
-The share button copies a `?book=` link, which needs a real URL to be useful. Opened straight
-from disk (`file://`) it falls back to copying just the book number. Turning on GitHub Pages
-fixes that:
+The live game is on Netlify at https://bookcricketindia.netlify.app/. There is nothing to build —
+Netlify serves the folder as it stands, with the repo root as the publish directory. With the
+site connected to this repo, a push to `main` is the whole deploy.
 
-    Settings -> Pages -> Source: deploy from branch -> main -> / (root)
-
-Your game then lives at `https://<your-username>.github.io/book-cricket/`.
+The share button copies a `?book=` link, which needs a real URL to be useful — from the live
+site it copies something like `https://bookcricketindia.netlify.app/?book=8541`. Opened straight
+from disk (`file://`) it falls back to copying just the book number.
 
 ## Scripts
 
 - `./setup-github.sh [repo-name]` — first-time setup: git init, first commit, create the GitHub
-  repo, push, and offer to switch on Pages. Needs the GitHub CLI, signed in with `gh auth login`.
+  repo and push. Already done for this repo, so it now exits early and does nothing. Needs the
+  GitHub CLI, signed in with `gh auth login`.
 - `./autopush.sh` — watches the folder and commits and pushes each time a file changes. Leave it
   running in a terminal tab; Ctrl-C stops it.
 
