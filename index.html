@@ -472,6 +472,7 @@
   var S = null;
   var record = {you:0, them:0, tie:0};
   var incomingBook = null;
+  var sharing = false;
 
   /* seeded page stream: the same book number always deals the same pages */
   function mulberry32(a){
@@ -849,16 +850,29 @@
     setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000);
   }
   function shareScorecard(){
+    if(sharing) return;                 /* a second click while the sheet is open */
     var text = shareText(), blob = S.card, file = null;
     if(blob && window.File){
       try{ file = new File([blob], 'book-cricket-' + S.book + '.png', {type:'image/png'}); }catch(e){ file = null; }
     }
+    /* A share the user backs out of is not a failure. Falling back there saved a
+       copy of the chit they had just declined to send, and platforms that reject
+       the promise after a successful share (Android Chrome, some macOS targets)
+       left them with two images: the one they shared and one in Downloads. */
+    var done = function(){ sharing = false; };
+    var failed = function(err){
+      sharing = false;
+      if(err && err.name === 'AbortError') return;
+      fallbackShare(text, blob);
+    };
     if(file && navigator.canShare && navigator.canShare({files:[file]})){
-      navigator.share({files:[file], text:text}).catch(function(){ fallbackShare(text, blob); });
+      sharing = true;
+      navigator.share({files:[file], text:text}).then(done, failed);
       return;
     }
     if(navigator.share){
-      navigator.share({title:'Book Cricket', text:text}).catch(function(){ fallbackShare(text, blob); });
+      sharing = true;
+      navigator.share({title:'Book Cricket', text:text}).then(done, failed);
       return;
     }
     fallbackShare(text, blob);
