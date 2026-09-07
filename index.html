@@ -719,7 +719,7 @@
     return 'Bench record today: you ' + record.you + ' - ' + record.them + ' ' + S.rival +
            (record.tie ? ' (' + record.tie + ' tied)' : '') + '.';
   }
-  function shareText(){
+  function shareText(inlineLink){
     var lines = [];
     lines.push('Book Cricket \u2014 rough book No. ' + S.book);
     lines.push('');
@@ -731,8 +731,10 @@
     lines.push(verdictText());
     var r = recordText();
     if(r) lines.push(r);
-    var link = bookLink();
-    lines.push(link ? 'Flip the same pages: ' + link : 'Same pages: open book No. ' + S.book);
+    var link = inlineLink === false ? '' : bookLink();
+    if(inlineLink !== false){
+      lines.push(link ? 'Flip the same pages: ' + link : 'Same pages: open book No. ' + S.book);
+    }
     return lines.join('\n');
   }
 
@@ -851,7 +853,12 @@
   }
   function shareScorecard(){
     if(sharing) return;                 /* a second click while the sheet is open */
-    var text = shareText(), blob = S.card, file = null;
+    /* The link rides in the url field rather than inline in the caption: pasted
+       into WhatsApp as text it unfurls into a second preview card, so a shared
+       scorecard arrived as two images. Not every platform accepts url alongside
+       files, so canShare() is asked first and the inline link is the fallback. */
+    var link = bookLink();
+    var text = shareText(), lean = shareText(false), blob = S.card, file = null;
     if(blob && window.File){
       try{ file = new File([blob], 'book-cricket-' + S.book + '.png', {type:'image/png'}); }catch(e){ file = null; }
     }
@@ -865,17 +872,26 @@
       if(err && err.name === 'AbortError') return;
       fallbackShare(text, blob);
     };
-    if(file && navigator.canShare && navigator.canShare({files:[file]})){
-      sharing = true;
-      navigator.share({files:[file], text:text}).then(done, failed);
-      return;
+    if(file && navigator.canShare){
+      var withUrl = {files:[file], text:lean, url:link};
+      if(link && navigator.canShare(withUrl)){
+        sharing = true;
+        navigator.share(withUrl).then(done, failed);
+        return;
+      }
+      if(navigator.canShare({files:[file]})){
+        sharing = true;
+        navigator.share({files:[file], text:text}).then(done, failed);
+        return;
+      }
     }
     if(navigator.share){
       sharing = true;
-      navigator.share({title:'Book Cricket', text:text}).then(done, failed);
+      navigator.share(link ? {title:'Book Cricket', text:lean, url:link}
+                           : {title:'Book Cricket', text:text}).then(done, failed);
       return;
     }
-    fallbackShare(text, blob);
+    fallbackShare(text, blob);   /* clipboard needs the link inline */
   }
   function fallbackShare(text, blob){
     copyText(text).then(function(){

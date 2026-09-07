@@ -47,7 +47,11 @@ from disk (`file://`) it falls back to copying just the book number.
 
 Because sharing is the only way anybody arrives, the page carries Open Graph and Twitter card
 tags so those links unfurl into a preview in WhatsApp, iMessage, Slack and X instead of showing
-a bare URL. The preview art is `preview.png` (1200x630). The tags hardcode the Netlify origin,
+a bare URL. When the scorecard is shared through the Web Share API the link travels in the `url`
+field rather than inline in the caption — pasted as text it unfurls into a second preview card,
+so the message arrived carrying two images. Platforms that will not take `url` alongside a file
+fall back to the inline link, so it is never dropped, and the clipboard copy always keeps it
+inline because a pasted message has no `url` field. The preview art is `preview.png` (1200x630). The tags hardcode the Netlify origin,
 so if the site ever moves, `og:image`, `og:url` and `twitter:image` in the `<head>` need the new
 one — a relative path will not do, unfurlers require absolute URLs.
 
