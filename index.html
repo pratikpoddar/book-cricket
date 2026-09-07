@@ -471,7 +471,6 @@
   /* ---------- state ---------- */
   var S = null;
   var record = {you:0, them:0, tie:0};
-  var incomingBook = null;
   var sharing = false;
 
   /* seeded page stream: the same book number always deals the same pages */
@@ -483,24 +482,14 @@
       return ((t ^ t >>> 14) >>> 0) / 4294967296;
     };
   }
-  function readBookParam(){
-    var m = /[?&]book=(\d{1,5})/.exec(location.search);
-    if(!m) return null;
-    var n = parseInt(m[1], 10);
-    return (n >= 1000 && n <= 9999) ? n : null;
-  }
   function freshBookNo(){ return 1000 + Math.floor(Math.random()*9000); }
-  /* A shared ?book= link keeps its number in the URL, so a reload replays that
-     match. Your own matches do not: the number is cleared, so every fresh visit
-     and every reload deals a new book. */
-  function clearBookParam(){
-    if(location.protocol === 'file:' || !history.replaceState) return;
-    if(!location.search) return;
-    try{ history.replaceState(null, '', location.pathname); }catch(e){}
-  }
 
-  function newMatch(bookNo){
-    var book = bookNo || freshBookNo();
+  /* Nothing in the URL seeds a match. A shared link used to carry ?book=, which
+     handed the recipient your match — same pages, same result, nothing left to
+     find out. Everyone who opens the game now gets their own book. The number
+     still stamps the match so a scorecard can name it. */
+  function newMatch(){
+    var book = freshBookNo();
     var rnd = mulberry32(book * 48271 % 2147483647);
     S = {
       phase: 'start',
@@ -516,7 +505,6 @@
       timers: []
     };
     el.bookNo.textContent = String(book);
-    if(!bookNo) clearBookParam();
   }
   function later(fn, ms){ var t = setTimeout(fn, ms); S.timers.push(t); return t; }
   function clearTimers(){ if(S){ S.timers.forEach(clearTimeout); S.timers = []; } }
@@ -696,7 +684,7 @@
   function bookLink(){
     if(location.protocol === 'file:') return '';
     if(!location.origin || location.origin === 'null') return '';
-    return location.origin + location.pathname + '?book=' + S.book;
+    return location.origin + location.pathname;
   }
   var SQ = {'W':'\uD83D\uDFE5', '\u00b7':'\u2B1C', '1':'\uD83D\uDFE9', '2':'\uD83D\uDFE9', '4':'\uD83D\uDFE6', '6':'\uD83D\uDFE7'};
   function grid(log){
@@ -732,9 +720,7 @@
     var r = recordText();
     if(r) lines.push(r);
     var link = inlineLink === false ? '' : bookLink();
-    if(inlineLink !== false){
-      lines.push(link ? 'Flip the same pages: ' + link : 'Same pages: open book No. ' + S.book);
-    }
+    if(link) lines.push('Your own book is waiting: ' + link);
     return lines.join('\n');
   }
 
@@ -902,17 +888,15 @@
       else { toast('Could not copy here. Screenshot the page instead.'); }
     });
   }
-  function copyBookLink(){
+  function copyGameLink(){
     var link = bookLink();
     if(!link){
-      copyText('Book Cricket, rough book No. ' + S.book + '. Same pages, same match.').then(function(){
-        toast('Book No. ' + S.book + ' copied. Anyone opening that book gets these exact pages.');
-      }, function(){ toast('Book No. ' + S.book + ' \u2014 same pages for anyone who opens it.'); });
+      toast('Open the game from a web address to get a link worth sending.');
       return;
     }
     copyText(link).then(function(){
-      toast('Link copied. They get book No. ' + S.book + ' \u2014 the same pages, ball for ball.');
-    }, function(){ toast('Copy failed. The book number is ' + S.book + '.'); });
+      toast('Link copied. They get a fresh book of their own.');
+    }, function(){ toast('Could not copy the link here.'); });
   }
 
   /* ---------- overlays ---------- */
@@ -942,11 +926,8 @@
     openOverlay(
       '<h2 class="ov-title" id="ovTitle">Book Cricket</h2>' +
       '<div class="ov-body">' +
-      (incomingBook
-        ? '<p>Somebody sent you their rough book. No. ' + S.book + ', same pages, same order.</p>' +
-          '<p>Class 8-B. Last bench. ' + S.rival + ' is your rival, same as theirs. Flip and see if the book treats you the way it treated them.</p>'
-        : '<p>Class 8-B. Last bench. Exam week.</p>' +
-          '<p>The geography period is free, the fan is on speed 5, and ' + S.rival + ' has challenged you to one match before the bell.</p>') +
+      '<p>Class 8-B. Last bench. Exam week.</p>' +
+      '<p>The geography period is free, the fan is on speed 5, and ' + S.rival + ' has challenged you to one match before the bell.</p>' +
       '<p>Your rough book decides everything. Flip a page, look at the last digit:</p>' +
       '<ul class="ov-list">' +
       '<li>2, 4, 6 &rarr; that many runs</li>' +
@@ -1031,20 +1012,19 @@
       '<button class="btn big" id="againBtn" type="button">Rematch (same bench)</button>' +
       '<div class="ov-actions">' +
       '<button class="btn share" id="shareBtn" type="button">Share the scorecard</button>' +
-      '<button class="btn link" id="linkBtn" type="button">Copy the same-book link</button>' +
+      '<button class="btn link" id="linkBtn" type="button">Copy the game link</button>' +
       '</div>'
     );
     say(verdict + '. ' + tail);
     document.getElementById('againBtn').addEventListener('click', restart);
     document.getElementById('shareBtn').addEventListener('click', shareScorecard);
-    document.getElementById('linkBtn').addEventListener('click', copyBookLink);
+    document.getElementById('linkBtn').addEventListener('click', copyGameLink);
   }
 
   function restart(){
     clearTimers();
     closeOverlay();
     el.toast.classList.remove('show');
-    incomingBook = null;
     newMatch();
     S.phase = 'bat1';
     clearBall();
@@ -1079,8 +1059,7 @@
     if(!el.flipBtn.disabled){ initAudio(); flip(); }
   });
 
-  incomingBook = readBookParam();
-  newMatch(incomingBook);
+  newMatch();
   showStart();
 })();
 </script>
