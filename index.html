@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book Cricket — Rough Book, 1998</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fdf8e9;
+    --paper-edge:#f2ead2;
+    --ink:#26406e;
+    --graphite:#3b3a36;
+    --rule:rgba(88,120,190,.30);
+    --margin-red:#c8483f;
+    --run:#1c6b34;
+    --six:#b4530a;
+    --out:#a81f18;
+    --wood-1:#7d5029;
+    --wood-2:#54321a;
+    --hand: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+    --chit: 'Shadows Into Light', 'Segoe Script', cursive;
+    --ui: 'Patrick Hand', 'Comic Sans MS', cursive;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    min-height:100vh;
+    font-family:var(--ui);
+    color:var(--graphite);
+    background-color:#6b4423;
+    background-image:
+      repeating-linear-gradient(91deg, rgba(0,0,0,.14) 0 2px, rgba(255,255,255,.035) 2px 5px, rgba(0,0,0,.06) 5px 12px, rgba(255,255,255,.02) 12px 15px),
+      repeating-linear-gradient(89deg, rgba(0,0,0,.09) 0 44px, rgba(255,235,200,.045) 44px 96px),
+      radial-gradient(ellipse at 18% 22%, rgba(255,206,140,.16), transparent 55%),
+      radial-gradient(ellipse at 82% 78%, rgba(0,0,0,.28), transparent 60%),
+      linear-gradient(158deg, var(--wood-1), var(--wood-2) 62%, #63401f);
+    overflow-x:hidden;
+  }
+  .desk{position:relative;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:18px 10px 26px}
+
+  /* carved desk graffiti */
+  .graffiti{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .graffiti b{
+    position:absolute;font-family:var(--chit);font-weight:400;
+    color:rgba(255,246,228,.26);
+    text-shadow:0 1.5px 0 rgba(0,0,0,.40), 0 -1px 0 rgba(255,255,255,.06);
+    white-space:nowrap;letter-spacing:.5px;
+  }
+  .g1{top:7%;left:3%;font-size:30px;transform:rotate(-6deg)}
+  .g2{top:20%;left:1.5%;font-size:22px;transform:rotate(3deg)}
+  .g3{bottom:22%;left:2.5%;font-size:24px;transform:rotate(-3deg)}
+  .g4{bottom:8%;left:5%;font-size:19px;transform:rotate(2deg)}
+  .g5{top:9%;right:3%;font-size:26px;transform:rotate(4deg)}
+  .g6{top:26%;right:2%;font-size:20px;transform:rotate(-4deg)}
+  .g7{bottom:26%;right:2.5%;font-size:22px;transform:rotate(3deg)}
+  .g8{bottom:9%;right:4%;font-size:18px;transform:rotate(-2deg)}
+  @media (max-width:1040px){.graffiti{display:none}}
+
+  /* the notebook page */
+  .page{
+    position:relative;z-index:1;width:100%;max-width:720px;
+    padding:16px 20px 22px 60px;
+    background-color:var(--paper);
+    background-image:
+      radial-gradient(circle at 78% 12%, rgba(70,110,200,.10), transparent 22%),
+      radial-gradient(circle at 22% 84%, rgba(70,110,200,.07), transparent 18%),
+      linear-gradient(90deg, transparent 0 51px, rgba(200,72,63,.60) 51px 52.5px, transparent 52.5px),
+      repeating-linear-gradient(180deg, transparent 0 27px, var(--rule) 27px 28px),
+      linear-gradient(180deg, #fffdf3, var(--paper) 12%, var(--paper-edge));
+    background-position:0 0, 0 0, 0 0, 0 12px, 0 0;
+    border-radius:2px 5px 5px 3px;
+    box-shadow:0 22px 40px rgba(0,0,0,.45), 0 2px 0 rgba(255,255,255,.25) inset, 8px 8px 0 -4px rgba(255,250,235,.35);
+  }
+  .spiral{
+    position:absolute;top:0;bottom:0;left:14px;width:20px;pointer-events:none;
+    background-image:radial-gradient(circle at 50% 50%, #2b1a0d 0 6px, rgba(0,0,0,.28) 6px 8px, transparent 8.5px);
+    background-size:100% 56px;background-repeat:repeat-y;background-position:0 24px;
+  }
+
+  header.head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;border-bottom:1.5px solid rgba(59,58,54,.35);padding-bottom:4px}
+  h1{font-family:var(--hand);font-size:clamp(30px,8vw,44px);margin:0;color:var(--ink);font-weight:700;line-height:1;transform:rotate(-1.4deg)}
+  .dateline{font-family:var(--hand);font-size:17px;color:var(--graphite);opacity:.8;white-space:nowrap}
+
+  .scorebug{margin:10px 0 4px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+  .sb-main{font-family:var(--hand);font-size:clamp(24px,6.6vw,34px);color:var(--ink);font-weight:700;line-height:1.05}
+  .sb-sub{font-family:var(--hand);font-size:clamp(17px,4.6vw,21px);color:var(--graphite)}
+  .sb-sub .need{color:var(--out)}
+
+  /* flip card */
+  .card{
+    margin:10px auto 6px;max-width:330px;text-align:center;
+    background:linear-gradient(180deg,#fffef7,#f7f0dd);
+    border:1.5px solid rgba(59,58,54,.45);border-radius:4px;
+    padding:8px 12px 10px;transform:rotate(-1.6deg);
+    box-shadow:3px 4px 0 rgba(0,0,0,.13);
+  }
+  .stamp{font-family:var(--chit);font-size:12.5px;color:rgba(38,64,110,.72);border-bottom:1px dashed rgba(59,58,54,.35);padding-bottom:3px;letter-spacing:.3px}
+  .pagenum{font-family:var(--hand);font-weight:700;font-size:clamp(46px,15vw,72px);line-height:1.05;color:var(--graphite);min-height:1.05em}
+  .card.shuffling .pagenum{color:#7a7770}
+  .pagelabel{font-family:var(--ui);font-size:13px;color:rgba(59,58,54,.7);margin-top:-4px}
+
+  .teacher{
+    display:none;margin:6px auto;max-width:430px;text-align:center;
+    font-family:var(--chit);font-size:clamp(17px,4.8vw,20px);color:#7a3b06;
+    background:rgba(255,231,168,.72);border:1.5px dashed #b4530a;border-radius:3px;padding:7px 10px;transform:rotate(.8deg);
+  }
+  .teacher.show{display:block}
+
+  .outcome{
+    text-align:center;font-family:var(--hand);font-weight:700;
+    font-size:clamp(38px,13vw,64px);line-height:1.05;min-height:1.1em;
+    color:var(--graphite);letter-spacing:.5px;
+  }
+  .outcome.run{color:var(--run)} .outcome.six{color:var(--six)} .outcome.out{color:var(--out)} .outcome.dot{color:#5d5b55}
+
+  .chit{
+    margin:2px auto 8px;max-width:420px;min-height:2.6em;
+    font-family:var(--chit);font-size:clamp(16px,4.6vw,19px);color:#2c2b27;text-align:center;
+    background:#fffdf0;border:1px solid rgba(59,58,54,.28);border-radius:2px;padding:8px 12px;
+    transform:rotate(-1.8deg);box-shadow:2px 3px 0 rgba(0,0,0,.10);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .chit:empty{visibility:hidden}
+
+  .book{margin:6px 0 2px}
+  .book-label{font-family:var(--ui);font-size:13.5px;color:rgba(59,58,54,.75)}
+  .scribble{font-family:var(--chit);font-size:20px;line-height:1.5;color:#2c2b27;display:flex;flex-wrap:wrap;gap:0 9px;min-height:1.5em;word-break:break-word}
+  .scribble .m-w{color:var(--out);font-weight:700}
+  .scribble .m-d{color:#6d6a63}
+  .scribble .m-6{color:var(--six)}
+  .scribble .m-4{color:var(--run)}
+
+  .wickets{display:flex;align-items:flex-end;gap:14px;margin:8px 0 2px}
+  .wk{width:26px;height:34px;display:block}
+  .wk svg{width:100%;height:100%;transition:transform .25s ease}
+  .wk .x{opacity:0}
+  .wk.fallen svg{transform:rotate(20deg) translateY(3px)}
+  .wk.fallen .st{opacity:.45}
+  .wk.fallen .x{opacity:1}
+  .wk-note{font-family:var(--ui);font-size:13.5px;color:rgba(59,58,54,.75);margin-left:2px;align-self:center}
+
+  .rules{
+    font-family:var(--ui);font-size:13.5px;line-height:1.35;color:#4a4842;
+    border-top:1px dashed rgba(59,58,54,.4);border-bottom:1px dashed rgba(59,58,54,.4);
+    padding:6px 0;margin:8px 0 12px;
+  }
+
+  .controls{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+  .btn{
+    font-family:var(--hand);font-weight:700;cursor:pointer;
+    background:linear-gradient(180deg,#fffdf2,#f0e6cd);
+    color:var(--ink);border:2px solid var(--ink);border-radius:6px;
+    box-shadow:3px 4px 0 rgba(38,64,110,.55);
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .btn:active{transform:translate(2px,3px);box-shadow:1px 1px 0 rgba(38,64,110,.55)}
+  .btn.big{min-height:62px;font-size:30px;letter-spacing:1px}
+  .btn.ghost{min-height:46px;font-size:20px;background:#fffdf2;color:#7a3b06;border-color:#b4530a;box-shadow:3px 4px 0 rgba(180,83,10,.45)}
+  .btn.ghost[aria-pressed="true"]{background:#ffe9b8}
+  .btn:disabled{opacity:.5;cursor:default;box-shadow:1px 2px 0 rgba(38,64,110,.35)}
+  .btn:focus-visible, a:focus-visible{outline:3px solid #b4530a;outline-offset:3px}
+
+  .doodle{display:block;margin:12px 0 0 auto;width:132px;height:74px;opacity:.55;transform:rotate(-5deg)}
+
+  /* overlays */
+  .overlay{
+    position:absolute;inset:0;z-index:5;display:none;
+    background:rgba(253,248,233,.94);border-radius:4px;
+    padding:20px 18px 22px 58px;overflow:auto;
+  }
+  .overlay.show{display:block}
+  .ov-card{max-width:520px;margin:0 auto}
+  .ov-title{font-family:var(--hand);font-weight:700;font-size:clamp(32px,9vw,48px);color:var(--ink);line-height:1;margin:0 0 8px;transform:rotate(-1.5deg)}
+  .ov-body{font-family:var(--ui);font-size:clamp(15.5px,4.3vw,17.5px);line-height:1.5;color:#3b3a36}
+  .ov-body p{margin:0 0 9px}
+  .ov-list{margin:6px 0 12px;padding-left:20px}
+  .ov-list li{margin-bottom:3px}
+  .stakes{font-family:var(--chit);font-size:clamp(16px,4.6vw,18.5px);background:#fffdf0;border:1px solid rgba(59,58,54,.3);padding:9px 11px;transform:rotate(-1.2deg);box-shadow:2px 3px 0 rgba(0,0,0,.1);margin:10px 0 16px}
+  .ov-score{font-family:var(--hand);font-size:clamp(22px,6vw,30px);color:var(--ink);font-weight:700;line-height:1.25;margin:10px 0}
+  .verdict{font-family:var(--hand);font-weight:700;font-size:clamp(30px,8.5vw,42px);line-height:1.05;margin:0 0 6px}
+  .verdict.win{color:var(--run)} .verdict.lose{color:var(--out)} .verdict.tie{color:var(--six)}
+
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  @media (max-width:400px){
+    .page{padding:14px 14px 20px 52px}
+    .spiral{left:11px;width:17px}
+    .page{background-position:0 0, 0 0, -6px 0, 0 12px, 0 0}
+    .wickets{gap:11px}
+    .overlay{padding:16px 14px 20px 50px}
+  }
+  .ov-actions{display:flex;gap:9px;margin-top:10px;flex-wrap:wrap}
+  .ov-actions .btn{flex:1 1 46%;min-height:50px;font-size:21px}
+  .btn.share{background:#fffdf2;color:var(--run);border-color:var(--run);box-shadow:3px 4px 0 rgba(28,107,52,.45)}
+  .btn.link{background:#fffdf2;color:var(--ink);border-color:var(--ink)}
+  .toast{
+    position:fixed;left:50%;bottom:22px;transform:translateX(-50%) rotate(-1.4deg);z-index:20;
+    max-width:min(420px,88vw);font-family:var(--chit);font-size:17px;line-height:1.35;color:#2c2b27;
+    background:#fffdf0;border:1px solid rgba(59,58,54,.35);border-radius:2px;padding:10px 14px;
+    box-shadow:3px 4px 0 rgba(0,0,0,.22);display:none;text-align:center;
+  }
+  .toast.show{display:block}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important}
+    h1,.card,.chit,.teacher,.stakes,.ov-title,.toast{transform:none !important}
+    .toast{left:auto;right:16px}
+    .wk.fallen svg{transform:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="desk">
+  <div class="graffiti" aria-hidden="true">
+    <b class="g1">SACHIN = GOD</b>
+    <b class="g2">Class 8-B RULES</b>
+    <b class="g3">Rahul loves Anjali</b>
+    <b class="g4">WWF &gt; studies</b>
+    <b class="g5">Undertaker 4ever</b>
+    <b class="g6">exam cancel karo</b>
+    <b class="g7">India v SL, 1996. don't talk about it.</b>
+    <b class="g8">last bench = best bench</b>
+  </div>
+
+  <main class="page">
+    <div class="spiral" aria-hidden="true"></div>
+
+    <header class="head">
+      <h1>Book Cricket</h1>
+      <div class="dateline">Date: ____________</div>
+    </header>
+
+    <div class="scorebug">
+      <div class="sb-main" id="sbMain">Book shut. Nothing yet.</div>
+      <div class="sb-sub" id="sbSub"></div>
+    </div>
+
+    <div class="card" id="card">
+      <div class="stamp">Saraswati Vidya Mandir &nbsp;·&nbsp; Rough Book No. <span id="bookNo">—</span> &nbsp;·&nbsp; 1998</div>
+      <div class="pagenum" id="pageNum">—</div>
+      <div class="pagelabel" id="pageLabel">flip to open a page</div>
+    </div>
+
+    <div class="teacher" id="teacher"></div>
+    <div class="outcome" id="outcome"></div>
+    <div class="chit" id="chit"></div>
+
+    <div class="book">
+      <div class="book-label" id="bookLabel">Scorebook</div>
+      <div class="scribble" id="scribble"></div>
+    </div>
+
+    <div class="wickets" id="wickets" aria-hidden="true"></div>
+
+    <div class="rules">
+      last digit 2/4/6 = runs &nbsp;-&nbsp; 8 = 1 run &nbsp;-&nbsp; 0 = OUT &nbsp;-&nbsp; odd = dot &nbsp;-&nbsp; 20 balls, 4 wickets
+    </div>
+
+    <div class="controls">
+      <button class="btn big" id="flipBtn" type="button">FLIP!</button>
+      <button class="btn ghost" id="ffBtn" type="button" hidden aria-pressed="false">&gt;&gt; hurry up</button>
+    </div>
+
+    <svg class="doodle" viewBox="0 0 200 112" aria-hidden="true" fill="none" stroke="#4a4842" stroke-width="2.4" stroke-linecap="round">
+      <path d="M28 96 L28 34 M46 96 L46 34 M64 96 L64 34" />
+      <path d="M20 32 q13 -5 26 0 M42 32 q13 -5 26 0" stroke-width="2" />
+      <path d="M24 98 q22 5 44 0" stroke-width="1.6" />
+      <path d="M126 22 q-9 6 -6 16 l26 40 q5 8 13 4 q8 -5 3 -13 l-26 -40 q-4 -9 -10 -7 z" />
+      <path d="M148 78 l14 22 q4 6 10 2 q6 -4 2 -10 l-14 -20" />
+      <circle cx="106" cy="90" r="12" />
+      <path d="M97 84 q9 6 18 0 M97 96 q9 -6 18 0" stroke-width="1.5" />
+    </svg>
+
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="ovTitle"></div>
+  </main>
+</div>
+
+<div class="sr" id="live" aria-live="polite" role="status"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var el = {
+    card: document.getElementById('card'),
+    pageNum: document.getElementById('pageNum'),
+    pageLabel: document.getElementById('pageLabel'),
+    teacher: document.getElementById('teacher'),
+    outcome: document.getElementById('outcome'),
+    chit: document.getElementById('chit'),
+    scribble: document.getElementById('scribble'),
+    bookLabel: document.getElementById('bookLabel'),
+    wickets: document.getElementById('wickets'),
+    sbMain: document.getElementById('sbMain'),
+    sbSub: document.getElementById('sbSub'),
+    flipBtn: document.getElementById('flipBtn'),
+    ffBtn: document.getElementById('ffBtn'),
+    overlay: document.getElementById('overlay'),
+    bookNo: document.getElementById('bookNo'),
+    toast: document.getElementById('toast'),
+    live: document.getElementById('live')
+  };
+
+  var NAMES = ['Sharma','Verma','Iyer','Khan',"D'Souza",'Gupta','Reddy'];
+  var BALLS = 20, WICKETS = 4;
+
+  /* ---------- audio (Web Audio API only, created on first tap) ---------- */
+  var ac = null;
+  function initAudio(){
+    if(!ac){
+      try{ var C = window.AudioContext || window.webkitAudioContext; if(C) ac = new C(); }catch(e){ ac = null; }
+    }
+    if(ac && ac.state === 'suspended'){ ac.resume(); }
+  }
+  function note(freq, at, dur, type, vol, endFreq){
+    if(!ac) return;
+    var t0 = ac.currentTime + at;
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, t0);
+    if(endFreq){ o.frequency.exponentialRampToValueAtTime(Math.max(40,endFreq), t0 + dur); }
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol || 0.12, t0 + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(ac.destination);
+    o.start(t0); o.stop(t0 + dur + 0.03);
+  }
+  function sPaper(){
+    if(!ac) return;
+    var t0 = ac.currentTime;
+    var len = Math.floor(ac.sampleRate * 0.045);
+    var buf = ac.createBuffer(1, len, ac.sampleRate);
+    var d = buf.getChannelData(0);
+    for(var i=0;i<len;i++){ d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 2.4); }
+    var src = ac.createBufferSource(); src.buffer = buf;
+    var hp = ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1400;
+    var g = ac.createGain(); g.gain.value = 0.10;
+    src.connect(hp); hp.connect(g); g.connect(ac.destination);
+    src.start(t0);
+  }
+  function sFour(){ note(784,0,.13,'triangle',.16); note(1046,.10,.18,'triangle',.15); }
+  function sSix(){ note(659,0,.14,'square',.10); note(880,.11,.14,'square',.10); note(1174,.22,.34,'triangle',.16); }
+  function sWicket(){ note(200,0,.42,'sawtooth',.16,70); note(150,.06,.36,'square',.07,60); }
+  function sBell(){
+    note(1318,0,1.5,'sine',.13); note(1976,0,1.2,'sine',.05);
+    note(1318,.42,1.4,'sine',.11); note(880,.42,1.0,'sine',.05);
+  }
+  function buzz(ms){ if(navigator.vibrate){ try{ navigator.vibrate(ms); }catch(e){} } }
+
+  /* ---------- commentary ---------- */
+  var LINES = {
+    six: [
+      'SIX!!! Out of the classroom window!',
+      'SIX! Into the principal\u2019s office. RUN!',
+      'SIX! It landed near the water tank. Gone forever.',
+      'SIX! Even the front bench turned around for that.',
+      'SIX! Hit the ceiling fan and the fan lost.',
+      'SIX! Somebody\u2019s tiffin is now flat.'
+    ],
+    four: [
+      'FOUR! Crashes into the geometry box!',
+      'FOUR! Skids past the duster, no chance.',
+      'FOUR! Straight through the gap between the desks.',
+      'FOUR! The compass box rattles. Nobody looks up.',
+      'FOUR! Chalk dust everywhere.',
+      'FOUR! Off the bench leg and away.'
+    ],
+    two: [
+      'Two runs. Cheeky single, cheekier second.',
+      'Two. Ran hard between the benches.',
+      'Two runs while the monitor wasn\u2019t looking.',
+      'Two. Not pretty. The scorebook does not care.',
+      'Two runs, and a whispered "yesss".',
+      'Two. Pushed to the third bench and back.'
+    ],
+    one: [
+      '8 on the page. House rule: one run only.',
+      'One run. The banned 8 strikes again.',
+      'Eight in the book, one on the board. Rules are rules.',
+      'Single. Somebody yells "no eight!" from the back.',
+      'One run. That 8 rule has saved many friendships.',
+      'Eight! Sorry. One. Keep flipping.'
+    ],
+    dot: [
+      'Blocked. The class yawns.',
+      'Dead bat. Even the ceiling fan is bored.',
+      'Dot ball. Odd page, odd luck.',
+      'No run. The bench squeaks in disappointment.',
+      'Left alone. Very responsible. Very boring.',
+      'Dot. Someone in the front row coughs.'
+    ],
+    out: [
+      'OUT! The page has betrayed you.',
+      'BOWLED! By a rough book. Shame.',
+      'OUT! You blame the paper quality.',
+      'GONE! The whole bench groans at once.',
+      'OUT! You ask for a re-flip. Denied.',
+      'CLEAN BOWLED. Zero on the page, zero mercy.'
+    ]
+  };
+  var RIVAL_LINES = {
+    six: [
+      '{n} smashes a SIX. Insufferable already.',
+      'SIX! {n} stands up to celebrate. Sit down, {n}.',
+      'SIX by {n}. He kisses the rough book.',
+      'SIX! {n} says he called it. He did not.',
+      'SIX. {n} is now doing a Sachin pose.',
+      'SIX! {n} looks straight at you. Rude.'
+    ],
+    four: [
+      'FOUR! {n} flips it like he owns the book.',
+      'FOUR to {n}. He taps the desk twice for style.',
+      'FOUR! {n} is grinning. Ignore him.',
+      'FOUR. {n} explains his "technique" again.',
+      'FOUR! {n} asks the bench to keep count.',
+      'FOUR to {n}, and a fresh round of trash talk.'
+    ],
+    out: [
+      '{n} demands a re-flip. Denied.',
+      'OUT! {n} says the page tore. It did not.',
+      '{n} is out, and blaming the fan speed.',
+      'GONE! {n} claims he wasn\u2019t ready.',
+      'OUT! {n} looks at you like you cheated. You didn\u2019t.',
+      '{n} is out. He shuffles the pages, hoping. No.'
+    ]
+  };
+  var TEACHER = [
+    'Miss Das walks by... everyone pretends to study Geography.',
+    'Principal on rounds! Book hidden under the exam pad.',
+    'The chalk stops squeaking. Sir has turned around...',
+    'Footsteps in the corridor. Nobody breathes.',
+    'The class monitor is watching. Bribe him at lunch.',
+    'Sir asks who is talking. Four hands point at the front bench.',
+    'Peon at the door with a notice. Freeze.',
+    'A shadow falls on the desk. Cover the book. Cover it!'
+  ];
+  var lastPick = {};
+  function pick(arr, key){
+    if(arr.length < 2) return arr[0];
+    var i, guard = 0;
+    do { i = Math.floor(Math.random()*arr.length); guard++; } while(i === lastPick[key] && guard < 12);
+    lastPick[key] = i;
+    return arr[i];
+  }
+
+  /* ---------- state ---------- */
+  var S = null;
+  var record = {you:0, them:0, tie:0};
+  var incomingBook = null;
+
+  /* seeded page stream: the same book number always deals the same pages */
+  function mulberry32(a){
+    return function(){
+      a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function readBookParam(){
+    var m = /[?&]book=(\d{1,5})/.exec(location.search);
+    if(!m) return null;
+    var n = parseInt(m[1], 10);
+    return (n >= 1000 && n <= 9999) ? n : null;
+  }
+  function freshBookNo(){ return 1000 + Math.floor(Math.random()*9000); }
+  function reflectBook(n){
+    if(location.protocol === 'file:' || !history.replaceState) return;
+    try{ history.replaceState(null, '', location.pathname + '?book=' + n); }catch(e){}
+  }
+
+  function newMatch(bookNo){
+    var book = bookNo || freshBookNo();
+    var rnd = mulberry32(book * 48271 % 2147483647);
+    S = {
+      phase: 'start',
+      book: book,
+      rnd: rnd,
+      rival: NAMES[Math.floor(rnd() * NAMES.length)],
+      you:   {runs:0, wkts:0, balls:0, log:[]},
+      them:  {runs:0, wkts:0, balls:0, log:[]},
+      target: 0,
+      fast: false,
+      busy: false,
+      card: null,
+      timers: []
+    };
+    el.bookNo.textContent = String(book);
+    reflectBook(book);
+  }
+  function later(fn, ms){ var t = setTimeout(fn, ms); S.timers.push(t); return t; }
+  function clearTimers(){ if(S){ S.timers.forEach(clearTimeout); S.timers = []; } }
+  function side(){ return S.phase === 'bat2' ? S.them : S.you; }
+
+  /* ---------- rules ---------- */
+  function resolve(digit){
+    if(digit === 0) return {kind:'out',  runs:0, big:'OUT!',  cls:'out',  mark:'W'};
+    if(digit === 2) return {kind:'two',  runs:2, big:'TWO',   cls:'run',  mark:'2'};
+    if(digit === 4) return {kind:'four', runs:4, big:'FOUR!', cls:'run',  mark:'4'};
+    if(digit === 6) return {kind:'six',  runs:6, big:'SIX!!!',cls:'six',  mark:'6'};
+    if(digit === 8) return {kind:'one',  runs:1, big:'ONE',   cls:'run',  mark:'1'};
+    return {kind:'dot', runs:0, big:'dot', cls:'dot', mark:'\u00b7'};
+  }
+
+  /* ---------- rendering ---------- */
+  function stumpSVG(){
+    return '<svg viewBox="0 0 26 34" fill="none" stroke="#3b3a36" stroke-width="2.2" stroke-linecap="round">'+
+      '<g class="st"><path d="M6 32 V10 M13 32 V10 M20 32 V10"/><path d="M4 9 q4.5 -3 9 0 M13 9 q4.5 -3 9 0" stroke-width="1.8"/></g>'+
+      '<g class="x" stroke="#a81f18" stroke-width="2.6"><path d="M4 6 L22 28"/><path d="M22 6 L4 28"/></g></svg>';
+  }
+  function renderWickets(){
+    var s = side(), out = '';
+    for(var i=0;i<WICKETS;i++){
+      out += '<span class="wk'+(i < s.wkts ? ' fallen' : '')+'">'+stumpSVG()+'</span>';
+    }
+    out += '<span class="wk-note">'+(WICKETS - s.wkts)+' wickets left</span>';
+    el.wickets.innerHTML = out;
+  }
+  function renderScribble(){
+    var s = side();
+    el.scribble.innerHTML = s.log.map(function(m){
+      var c = m === 'W' ? 'm-w' : (m === '\u00b7' ? 'm-d' : (m === '6' ? 'm-6' : (m === '4' ? 'm-4' : '')));
+      return '<span class="'+c+'">'+m+'</span>';
+    }).join('');
+  }
+  function renderScore(){
+    var s = side();
+    var left = BALLS - s.balls;
+    if(S.phase === 'bat1' || S.phase === 'break'){
+      el.sbMain.textContent = 'You ' + s.runs + '/' + s.wkts;
+      el.sbSub.textContent = left + (left === 1 ? ' ball left' : ' balls left') + ', ' + (WICKETS - s.wkts) + ' wickets in hand';
+      el.bookLabel.textContent = 'Your scorebook';
+    } else if(S.phase === 'bat2' || S.phase === 'result'){
+      var need = S.target - S.them.runs;
+      el.sbMain.textContent = S.rival + ' ' + S.them.runs + '/' + S.them.wkts;
+      if(need > 0 && left > 0 && S.them.wkts < WICKETS){
+        el.sbSub.innerHTML = '<span class="need">needs ' + need + ' off ' + left + (left === 1 ? ' ball' : ' balls') + '</span>, ' +
+                             (WICKETS - S.them.wkts) + ' wickets left &nbsp;-&nbsp; target ' + S.target;
+      } else {
+        el.sbSub.textContent = 'target ' + S.target + ' (you made ' + S.you.runs + ')';
+      }
+      el.bookLabel.textContent = S.rival + '\u2019s scorebook';
+    }
+    renderWickets();
+    renderScribble();
+  }
+  function clearBall(){
+    el.outcome.textContent = '';
+    el.outcome.className = 'outcome';
+    el.chit.textContent = '';
+    el.teacher.className = 'teacher';
+    el.teacher.textContent = '';
+  }
+  function setFlip(enabled, label){
+    el.flipBtn.disabled = !enabled;
+    if(label) el.flipBtn.textContent = label;
+  }
+  function say(msg){ el.live.textContent = msg; }
+
+  /* ---------- flip sequence ---------- */
+  function shuffleThen(cb){
+    var dur = reduced ? 130 : 520;
+    if(reduced){ el.pageLabel.textContent = 'opening a page...'; later(cb, dur); return; }
+    el.card.classList.add('shuffling');
+    el.pageLabel.textContent = 'flipping...';
+    var iv = setInterval(function(){
+      el.pageNum.textContent = String(10 + Math.floor(Math.random()*190));
+      sPaper();
+    }, 55);
+    later(function(){
+      clearInterval(iv);
+      el.card.classList.remove('shuffling');
+      cb();
+    }, dur);
+  }
+
+  function flip(){
+    if(!S || S.busy) return;
+    if(S.phase !== 'bat1' && S.phase !== 'bat2') return;
+    S.busy = true;
+    if(S.phase === 'bat1') setFlip(false);
+    clearBall();
+
+    shuffleThen(function(){
+      var page = 10 + Math.floor(S.rnd()*190);
+      var res = resolve(page % 10);
+      var show = function(){ reveal(page, res); };
+      if(Math.random() < 0.10){
+        el.teacher.textContent = pick(TEACHER, 'teacher');
+        el.teacher.className = 'teacher show';
+        el.pageNum.textContent = '??';
+        el.pageLabel.textContent = 'book shut. wait.';
+        say(el.teacher.textContent);
+        later(function(){
+          el.teacher.className = 'teacher';
+          el.teacher.textContent = '';
+          show();
+        }, S.fast ? 450 : 1300);
+      } else {
+        show();
+      }
+    });
+  }
+
+  function reveal(page, res){
+    var s = side();
+    var isRival = S.phase === 'bat2';
+
+    el.pageNum.textContent = String(page);
+    el.pageLabel.textContent = 'page ' + page + ' \u2014 last digit ' + (page % 10);
+    el.outcome.textContent = res.big;
+    el.outcome.className = 'outcome ' + res.cls;
+
+    var line;
+    if(isRival && RIVAL_LINES[res.kind]){
+      line = pick(RIVAL_LINES[res.kind], 'r-' + res.kind).replace(/\{n\}/g, S.rival);
+    } else {
+      line = pick(LINES[res.kind], res.kind);
+    }
+    el.chit.textContent = line;
+
+    s.balls++;
+    if(res.kind === 'out'){ s.wkts++; s.log.push('W'); sWicket(); buzz(60); }
+    else { s.runs += res.runs; s.log.push(res.mark); 
+           if(res.kind === 'six'){ sSix(); buzz([30,40,60]); }
+           else if(res.kind === 'four'){ sFour(); }
+    }
+
+    renderScore();
+    var who = isRival ? S.rival : 'You';
+    say('Page ' + page + '. ' + res.big + ' ' + line + ' ' + who + ' ' + s.runs + ' for ' + s.wkts +
+        ', ' + (BALLS - s.balls) + ' balls left.');
+
+    var over = s.balls >= BALLS || s.wkts >= WICKETS || (isRival && s.runs >= S.target);
+    if(over){
+      later(endInnings, S.fast ? 500 : 1100);
+    } else if(isRival){
+      later(function(){ S.busy = false; flip(); }, S.fast ? 380 : 1500);
+    } else {
+      S.busy = false;
+      setFlip(true, 'FLIP!');
+    }
+  }
+
+  function endInnings(){
+    S.busy = false;
+    if(S.phase === 'bat1'){
+      S.target = S.you.runs + 1;
+      S.phase = 'break';
+      sBell();
+      showBreak();
+    } else {
+      S.phase = 'result';
+      showResult();
+    }
+  }
+
+  /* ---------- sharing ---------- */
+  var toastTimer = null;
+  function toast(msg){
+    el.toast.textContent = msg;
+    el.toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ el.toast.classList.remove('show'); }, 3400);
+  }
+  function bookLink(){
+    if(location.protocol === 'file:') return '';
+    if(!location.origin || location.origin === 'null') return '';
+    return location.origin + location.pathname + '?book=' + S.book;
+  }
+  var SQ = {'W':'\uD83D\uDFE5', '\u00b7':'\u2B1C', '1':'\uD83D\uDFE9', '2':'\uD83D\uDFE9', '4':'\uD83D\uDFE6', '6':'\uD83D\uDFE7'};
+  function grid(log){
+    var out = '';
+    for(var i=0;i<log.length;i++){
+      out += (SQ[log[i]] || '\u2B1C');
+      if(i === 9 && log.length > 10) out += '\n';
+    }
+    return out;
+  }
+  function verdictText(){
+    var y = S.you, t = S.them;
+    if(t.runs >= S.target) return S.rival + ' wins by ' + (WICKETS - t.wkts) + (WICKETS - t.wkts === 1 ? ' wicket' : ' wickets') + '. He will not let it go.';
+    if(t.runs === y.runs) return 'Tied. Both buy samosas, nobody is happy.';
+    return 'You win by ' + (y.runs - t.runs) + (y.runs - t.runs === 1 ? ' run' : ' runs') + '. That is his samosa now.';
+  }
+  function recordText(){
+    var n = record.you + record.them + record.tie;
+    if(n < 2) return '';
+    return 'Bench record today: you ' + record.you + ' - ' + record.them + ' ' + S.rival +
+           (record.tie ? ' (' + record.tie + ' tied)' : '') + '.';
+  }
+  function shareText(){
+    var lines = [];
+    lines.push('Book Cricket \u2014 rough book No. ' + S.book);
+    lines.push('');
+    lines.push('You ' + S.you.runs + '/' + S.you.wkts + ' in ' + S.you.balls);
+    lines.push(grid(S.you.log));
+    lines.push(S.rival + ' ' + S.them.runs + '/' + S.them.wkts + ' in ' + S.them.balls);
+    lines.push(grid(S.them.log));
+    lines.push('');
+    lines.push(verdictText());
+    var r = recordText();
+    if(r) lines.push(r);
+    var link = bookLink();
+    lines.push(link ? 'Flip the same pages: ' + link : 'Same pages: open book No. ' + S.book);
+    return lines.join('\n');
+  }
+
+  /* hand-drawn scorecard chit as a PNG */
+  function drawCard(cb){
+    var W = 1080, H = 1080;
+    var c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    var x = c.getContext('2d');
+    if(!x){ cb(null); return; }
+
+    x.fillStyle = '#fdf8e9'; x.fillRect(0,0,W,H);
+    var g = x.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'rgba(255,255,255,.55)'); g.addColorStop(1,'rgba(198,180,142,.28)');
+    x.fillStyle = g; x.fillRect(0,0,W,H);
+    x.fillStyle = 'rgba(70,110,200,.07)';
+    x.beginPath(); x.arc(880,240,120,0,6.2832); x.fill();
+    x.beginPath(); x.arc(230,1180,86,0,6.2832); x.fill();
+
+    x.strokeStyle = 'rgba(88,120,190,.30)'; x.lineWidth = 2;
+    for(var yy = 232; yy < H - 60; yy += 54){
+      x.beginPath(); x.moveTo(0, yy); x.lineTo(W, yy); x.stroke();
+    }
+    x.strokeStyle = 'rgba(200,72,63,.55)'; x.lineWidth = 4;
+    x.beginPath(); x.moveTo(132, 0); x.lineTo(132, H); x.stroke();
+    for(var hy = 96; hy < H; hy += 118){
+      x.fillStyle = '#2b1a0d';
+      x.beginPath(); x.arc(58, hy, 16, 0, 6.2832); x.fill();
+    }
+
+    var hand = '"Caveat", cursive', chit = '"Shadows Into Light", cursive';
+    var L = 178;
+    x.fillStyle = '#26406e'; x.textBaseline = 'alphabetic';
+    x.font = '700 96px ' + hand;
+    x.fillText('Book Cricket', L, 150);
+    x.fillStyle = 'rgba(59,58,54,.8)'; x.font = '34px ' + chit;
+    x.fillText('Saraswati Vidya Mandir \u00b7 rough book No. ' + S.book + ' \u00b7 1998', L, 200);
+
+    var y0 = 300;
+    x.fillStyle = '#3b3a36'; x.font = '700 58px ' + hand;
+    x.fillText('You  ' + S.you.runs + '/' + S.you.wkts, L, y0);
+    x.fillStyle = 'rgba(59,58,54,.72)'; x.font = '34px ' + chit;
+    x.fillText('in ' + S.you.balls + ' balls', L + 330, y0 - 6);
+    y0 = marks(x, S.you.log, L, y0 + 46, chit);
+
+    y0 += 62;
+    x.fillStyle = '#3b3a36'; x.font = '700 58px ' + hand;
+    x.fillText(S.rival + '  ' + S.them.runs + '/' + S.them.wkts, L, y0);
+    x.fillStyle = 'rgba(59,58,54,.72)'; x.font = '34px ' + chit;
+    x.fillText('in ' + S.them.balls + ' balls', L + 330, y0 - 6);
+    y0 = marks(x, S.them.log, L, y0 + 46, chit);
+
+    var win = S.them.runs >= S.target ? 'lose' : (S.them.runs === S.you.runs ? 'tie' : 'win');
+    x.fillStyle = win === 'win' ? '#1c6b34' : (win === 'lose' ? '#a81f18' : '#b4530a');
+    x.font = '700 76px ' + hand;
+    wrap(x, verdictText(), L, y0 + 108, W - L - 90, 78);
+
+    x.fillStyle = 'rgba(59,58,54,.7)'; x.font = '32px ' + chit;
+    var foot = recordText() || 'Target was ' + S.target + '.';
+    x.fillText(foot, L, H - 96);
+    x.fillText('20 balls, 4 wickets. 8 is banned.', L, H - 54);
+
+    try{ c.toBlob(function(b){ cb(b); }, 'image/png'); }catch(e){ cb(null); }
+  }
+  function marks(x, log, left, top, font){
+    x.font = '46px ' + font;
+    var cx = left, cy = top, per = 0;
+    for(var i=0;i<log.length;i++){
+      var m = log[i];
+      x.fillStyle = m === 'W' ? '#a81f18' : (m === '\u00b7' ? '#6d6a63' : (m === '6' ? '#b4530a' : (m === '4' ? '#1c6b34' : '#2c2b27')));
+      x.fillText(m, cx, cy);
+      cx += 40; per++;
+      if(per === 14){ per = 0; cx = left; cy += 52; }
+    }
+    return cy;
+  }
+  function wrap(x, text, left, top, maxW, lh){
+    var words = text.split(' '), line = '', y = top;
+    for(var i=0;i<words.length;i++){
+      var test = line ? line + ' ' + words[i] : words[i];
+      if(x.measureText(test).width > maxW && line){
+        x.fillText(line, left, y); y += lh; line = words[i];
+      } else { line = test; }
+    }
+    if(line) x.fillText(line, left, y);
+  }
+  function prepCard(){
+    S.card = null;
+    var go = function(){ drawCard(function(b){ if(S) S.card = b; }); };
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(go, go);
+    } else { go(); }
+  }
+  function copyText(t){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(t);
+    }
+    return new Promise(function(res, rej){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = t; ta.setAttribute('readonly',''); 
+        ta.style.position = 'fixed'; ta.style.top = '-1000px';
+        document.body.appendChild(ta); ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? res() : rej();
+      }catch(e){ rej(e); }
+    });
+  }
+  function download(blob, name){
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000);
+  }
+  function shareScorecard(){
+    var text = shareText(), blob = S.card, file = null;
+    if(blob && window.File){
+      try{ file = new File([blob], 'book-cricket-' + S.book + '.png', {type:'image/png'}); }catch(e){ file = null; }
+    }
+    if(file && navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({files:[file], text:text}).catch(function(){ fallbackShare(text, blob); });
+      return;
+    }
+    if(navigator.share){
+      navigator.share({title:'Book Cricket', text:text}).catch(function(){ fallbackShare(text, blob); });
+      return;
+    }
+    fallbackShare(text, blob);
+  }
+  function fallbackShare(text, blob){
+    copyText(text).then(function(){
+      if(blob){ download(blob, 'book-cricket-' + S.book + '.png'); toast('Scorecard copied, and the paper chit saved as a picture.'); }
+      else { toast('Scorecard copied. Paste it in the class group.'); }
+    }, function(){
+      if(blob){ download(blob, 'book-cricket-' + S.book + '.png'); toast('Saved the scorecard as a picture.'); }
+      else { toast('Could not copy here. Screenshot the page instead.'); }
+    });
+  }
+  function copyBookLink(){
+    var link = bookLink();
+    if(!link){
+      copyText('Book Cricket, rough book No. ' + S.book + '. Same pages, same match.').then(function(){
+        toast('Book No. ' + S.book + ' copied. Anyone opening that book gets these exact pages.');
+      }, function(){ toast('Book No. ' + S.book + ' \u2014 same pages for anyone who opens it.'); });
+      return;
+    }
+    copyText(link).then(function(){
+      toast('Link copied. They get book No. ' + S.book + ' \u2014 the same pages, ball for ball.');
+    }, function(){ toast('Copy failed. The book number is ' + S.book + '.'); });
+  }
+
+  /* ---------- overlays ---------- */
+  var firstFocus = null;
+  function openOverlay(html){
+    el.overlay.innerHTML = '<div class="ov-card">' + html + '</div>';
+    el.overlay.classList.add('show');
+    firstFocus = el.overlay.querySelector('button');
+    if(firstFocus) firstFocus.focus();
+  }
+  function closeOverlay(){
+    el.overlay.classList.remove('show');
+    el.overlay.innerHTML = '';
+  }
+
+  function showStart(){
+    el.sbMain.textContent = 'Book shut. Nothing yet.';
+    el.sbSub.textContent = '';
+    el.pageNum.textContent = '\u2014';
+    el.pageLabel.textContent = 'flip to open a page';
+    el.scribble.innerHTML = '';
+    el.bookLabel.textContent = 'Scorebook';
+    el.wickets.innerHTML = '';
+    clearBall();
+    el.ffBtn.hidden = true;
+    setFlip(false, 'FLIP!');
+    openOverlay(
+      '<h2 class="ov-title" id="ovTitle">Book Cricket</h2>' +
+      '<div class="ov-body">' +
+      (incomingBook
+        ? '<p>Somebody sent you their rough book. No. ' + S.book + ', same pages, same order.</p>' +
+          '<p>Class 8-B. Last bench. ' + S.rival + ' is your rival, same as theirs. Flip and see if the book treats you the way it treated them.</p>'
+        : '<p>Class 8-B. Last bench. Exam week.</p>' +
+          '<p>The geography period is free, the fan is on speed 5, and ' + S.rival + ' has challenged you to one match before the bell.</p>') +
+      '<p>Your rough book decides everything. Flip a page, look at the last digit:</p>' +
+      '<ul class="ov-list">' +
+      '<li>2, 4, 6 &rarr; that many runs</li>' +
+      '<li>8 &rarr; 1 run only (8 is banned, too lucky)</li>' +
+      '<li>0 &rarr; OUT</li>' +
+      '<li>1, 3, 5, 7, 9 &rarr; dot ball</li>' +
+      '<li>20 balls or 4 wickets each. You bat first.</li>' +
+      '</ul>' +
+      '<div class="stakes">Winner gets the other person\u2019s samosa at the canteen. Loser also carries both bags home.</div>' +
+      '</div>' +
+      '<button class="btn big" id="startBtn" type="button">Open the rough book</button>'
+    );
+    document.getElementById('startBtn').addEventListener('click', function(){
+      initAudio(); sBell();
+      closeOverlay();
+      S.phase = 'bat1';
+      renderScore();
+      setFlip(true, 'FLIP!');
+      el.flipBtn.focus();
+      say('Your innings. 20 balls, 4 wickets. Press flip.');
+    });
+  }
+
+  function showBreak(){
+    openOverlay(
+      '<h2 class="ov-title" id="ovTitle">Lunch break!</h2>' +
+      '<div class="ov-body">' +
+      '<p>You shut the book and act casual. The bell goes, ' + S.rival + ' pulls the rough book across the desk.</p>' +
+      '<div class="ov-score">You: ' + S.you.runs + '/' + S.you.wkts + ' in ' + S.you.balls + ' balls<br>' +
+      S.rival + ' needs ' + S.target + ' to win</div>' +
+      '<p>He gets 20 balls and 4 wickets too. Same book, same rules, no re-flips.</p>' +
+      '</div>' +
+      '<button class="btn big" id="chaseBtn" type="button">Start the chase</button>'
+    );
+    document.getElementById('chaseBtn').addEventListener('click', function(){
+      closeOverlay();
+      S.phase = 'bat2';
+      S.busy = false;
+      clearBall();
+      el.pageNum.textContent = '\u2014';
+      el.pageLabel.textContent = S.rival + ' is flipping';
+      renderScore();
+      setFlip(false, S.rival + ' is batting...');
+      el.ffBtn.hidden = false;
+      el.ffBtn.focus();
+      say(S.rival + ' is chasing ' + S.target + '. Watch.');
+      later(flip, 900);
+    });
+  }
+
+  function showResult(){
+    el.ffBtn.hidden = true;
+    setFlip(false, 'Match over');
+    var y = S.you, t = S.them, cls, verdict, tail;
+    if(t.runs >= S.target){
+      cls = 'lose';
+      record.them++;
+      verdict = S.rival + ' wins by ' + (WICKETS - t.wkts) + (WICKETS - t.wkts === 1 ? ' wicket' : ' wickets');
+      tail = 'He will remind you about this till Class 10.';
+    } else if(t.runs === y.runs){
+      cls = 'tie';
+      record.tie++;
+      verdict = 'Tied match';
+      tail = 'Both buy samosas, nobody is happy.';
+      sBell();
+    } else {
+      cls = 'win';
+      record.you++;
+      verdict = 'You win by ' + (y.runs - t.runs) + (y.runs - t.runs === 1 ? ' run' : ' runs');
+      tail = 'He owes you a samosa and his fancy Hero pen. He will call it luck all week.';
+    }
+    prepCard();
+    var rec = recordText();
+    openOverlay(
+      '<h2 class="verdict ' + cls + '" id="ovTitle">' + verdict + '</h2>' +
+      '<div class="ov-body">' +
+      '<p>' + tail + '</p>' +
+      '<div class="ov-score">You: ' + y.runs + '/' + y.wkts + ' in ' + y.balls + ' balls<br>' +
+      S.rival + ': ' + t.runs + '/' + t.wkts + ' in ' + t.balls + ' balls</div>' +
+      '<p>Target was ' + S.target + ', on rough book No. ' + S.book + '.' + (rec ? ' ' + rec : '') + '</p>' +
+      '</div>' +
+      '<button class="btn big" id="againBtn" type="button">Rematch (same bench)</button>' +
+      '<div class="ov-actions">' +
+      '<button class="btn share" id="shareBtn" type="button">Share the scorecard</button>' +
+      '<button class="btn link" id="linkBtn" type="button">Copy the same-book link</button>' +
+      '</div>'
+    );
+    say(verdict + '. ' + tail);
+    document.getElementById('againBtn').addEventListener('click', restart);
+    document.getElementById('shareBtn').addEventListener('click', shareScorecard);
+    document.getElementById('linkBtn').addEventListener('click', copyBookLink);
+  }
+
+  function restart(){
+    clearTimers();
+    closeOverlay();
+    el.toast.classList.remove('show');
+    newMatch();
+    S.phase = 'bat1';
+    clearBall();
+    el.pageNum.textContent = '\u2014';
+    el.pageLabel.textContent = 'flip to open a page';
+    el.ffBtn.hidden = true;
+    el.ffBtn.setAttribute('aria-pressed','false');
+    renderScore();
+    setFlip(true, 'FLIP!');
+    initAudio(); sBell();
+    el.flipBtn.focus();
+    say('New match, book number ' + S.book + ', against ' + S.rival + '. Your innings.');
+  }
+
+  /* ---------- controls ---------- */
+  el.flipBtn.addEventListener('click', function(){ initAudio(); flip(); });
+  el.ffBtn.addEventListener('click', function(){
+    S.fast = !S.fast;
+    el.ffBtn.setAttribute('aria-pressed', S.fast ? 'true' : 'false');
+    el.ffBtn.innerHTML = S.fast ? '&gt;&gt; hurrying' : '&gt;&gt; hurry up';
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== ' ' && e.key !== 'Spacebar' && e.key !== 'Enter') return;
+    var tag = (e.target && e.target.tagName) || '';
+    if(tag === 'BUTTON'){ if(e.key === ' ' || e.key === 'Spacebar'){ /* button handles it */ } return; }
+    e.preventDefault();
+    if(el.overlay.classList.contains('show')){
+      var b = el.overlay.querySelector('button');
+      if(b) b.click();
+      return;
+    }
+    if(!el.flipBtn.disabled){ initAudio(); flip(); }
+  });
+
+  incomingBook = readBookParam();
+  newMatch(incomingBook);
+  showStart();
+})();
+</script>
+</body>
+</html>
