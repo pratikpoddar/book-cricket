@@ -6,7 +6,8 @@ bench rival, set a target, then watch him chase it.
 
 Play it: **https://bookcricketindia.netlify.app/**
 
-One file, no build step, no dependencies. Open `index.html` in a browser and it runs.
+One HTML file, no build step, no framework. Open `index.html` in a browser and it runs.
+(`preview.png` sits alongside it purely so shared links get a picture.)
 
 ## House rules
 
@@ -27,6 +28,10 @@ always deals the same twenty pages in the same order, against the same rival. Op
 `?book=4821` and you get that exact match, ball for ball. The teacher interruptions and the
 commentary stay random, so a replay still feels live.
 
+Your own matches leave the URL alone, so every visit and every reload deals a fresh book. Only a
+link somebody sent you replays a fixed one, and hitting Rematch drops the number from the URL —
+you are back to new books from then on.
+
 Because book cricket involves no skill, a shared book is for replaying and arguing, not for
 beating a score — the result is identical for everyone who opens it.
 
@@ -39,6 +44,12 @@ site connected to this repo, a push to `main` is the whole deploy.
 The share button copies a `?book=` link, which needs a real URL to be useful — from the live
 site it copies something like `https://bookcricketindia.netlify.app/?book=8541`. Opened straight
 from disk (`file://`) it falls back to copying just the book number.
+
+Because sharing is the only way anybody arrives, the page carries Open Graph and Twitter card
+tags so those links unfurl into a preview in WhatsApp, iMessage, Slack and X instead of showing
+a bare URL. The preview art is `preview.png` (1200x630). The tags hardcode the Netlify origin,
+so if the site ever moves, `og:image`, `og:url` and `twitter:image` in the `<head>` need the new
+one — a relative path will not do, unfurlers require absolute URLs.
 
 ## Scripts
 
@@ -53,3 +64,7 @@ from disk (`file://`) it falls back to copying just the book number.
 Vanilla HTML, CSS and JavaScript. Sounds are generated at runtime with the Web Audio API, so
 there are no audio files. The share image is drawn on a canvas. Handwriting fonts come from
 Google Fonts, with cursive fallbacks so it degrades gracefully offline.
+
+Hit counts come from [GoatCounter](https://www.goatcounter.com) — one async script, no cookies
+and no personal data, so there is nothing to put a consent banner in front of. Stats live at
+`https://pratikpoddar.goatcounter.com`.

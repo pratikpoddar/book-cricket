@@ -4,6 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Book Cricket — Rough Book, 1998</title>
+<meta name="description" content="The last-bench game from a 1998 Indian classroom: flip to a random page of a rough notebook and the last digit decides the ball. 20 balls against a bench rival, then watch him chase your target.">
+<meta name="theme-color" content="#fdf8e9">
+<link rel="canonical" href="https://bookcricketindia.netlify.app/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Book Cricket">
+<meta property="og:title" content="Book Cricket — Rough Book, 1998">
+<meta property="og:description" content="The last-bench game from a 1998 Indian classroom: flip to a random page of a rough notebook and the last digit decides the ball. 20 balls against a bench rival, then watch him chase your target.">
+<meta property="og:url" content="https://bookcricketindia.netlify.app/">
+<meta property="og:image" content="https://bookcricketindia.netlify.app/preview.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A ruled rough-notebook page headed Book Cricket, listing the house rules: 2, 4 or 6 are runs, 8 is one run, 0 is out, odd numbers are dot balls.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Book Cricket — Rough Book, 1998">
+<meta name="twitter:description" content="The last-bench game from a 1998 Indian classroom: flip to a random page of a rough notebook and the last digit decides the ball. 20 balls against a bench rival, then watch him chase your target.">
+<meta name="twitter:image" content="https://bookcricketindia.netlify.app/preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&family=Shadows+Into+Light&display=swap" rel="stylesheet">
@@ -168,7 +187,7 @@
   /* overlays */
   .overlay{
     position:absolute;inset:0;z-index:5;display:none;
-    background:rgba(253,248,233,.94);border-radius:4px;
+    background:rgba(253,248,233,.97);border-radius:4px;
     padding:20px 18px 22px 58px;overflow:auto;
   }
   .overlay.show{display:block}
@@ -470,9 +489,13 @@
     return (n >= 1000 && n <= 9999) ? n : null;
   }
   function freshBookNo(){ return 1000 + Math.floor(Math.random()*9000); }
-  function reflectBook(n){
+  /* A shared ?book= link keeps its number in the URL, so a reload replays that
+     match. Your own matches do not: the number is cleared, so every fresh visit
+     and every reload deals a new book. */
+  function clearBookParam(){
     if(location.protocol === 'file:' || !history.replaceState) return;
-    try{ history.replaceState(null, '', location.pathname + '?book=' + n); }catch(e){}
+    if(!location.search) return;
+    try{ history.replaceState(null, '', location.pathname); }catch(e){}
   }
 
   function newMatch(bookNo){
@@ -492,7 +515,7 @@
       timers: []
     };
     el.bookNo.textContent = String(book);
-    reflectBook(book);
+    if(!bookNo) clearBookParam();
   }
   function later(fn, ms){ var t = setTimeout(fn, ms); S.timers.push(t); return t; }
   function clearTimers(){ if(S){ S.timers.forEach(clearTimeout); S.timers = []; } }
@@ -991,6 +1014,7 @@
     clearTimers();
     closeOverlay();
     el.toast.classList.remove('show');
+    incomingBook = null;
     newMatch();
     S.phase = 'bat1';
     clearBall();
@@ -1030,5 +1054,7 @@
   showStart();
 })();
 </script>
+<script data-goatcounter="https://pratikpoddar.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
